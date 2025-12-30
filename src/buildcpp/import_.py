@@ -3,6 +3,16 @@ from .cmake.target import AbstractTarget
 
 
 def import_project(buildcpp: Path) -> dict:
+    """
+    Import a third-party buildcpp project.
+
+    If `buildcpp` is a directory, It will try to find a Python file
+    with the same name as the folder in that folder.
+    """
+    if buildcpp.is_dir():
+        buildcpp = buildcpp / (buildcpp.name + '.py')
+    if not buildcpp.is_file():
+        raise FileNotFoundError(f"Cannot find buildcpp project '{buildcpp}'")
     project_dir = buildcpp.parent
     project_name = project_dir.name.split('.')[0]
 
