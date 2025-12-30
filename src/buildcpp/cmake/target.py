@@ -21,6 +21,9 @@ class AbstractTarget(ABC):
 
 
 class Target(AbstractTarget):
+    """
+    The standrad target in CMake.
+    """
     def __init__(self, name: str, type: Type = Type.EXECUTABLE) -> None:
         super().__init__(name)
 
@@ -167,3 +170,8 @@ class Target(AbstractTarget):
                 result += f"{part}({self.name} {scope.value} {' '.join(files)})\n"
 
         return result
+
+    def add_define(self, scope: Scope, key: str, value: str | None = None):
+        define = key + (f"={value}" if value is not None else "")
+        self.add_defines(scope, define)
+        return self
