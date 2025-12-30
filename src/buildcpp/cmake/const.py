@@ -2,39 +2,55 @@ from enum import Enum
 
 
 class Type(Enum):
-    EXECUTABLE = 1
-    STATIC_LIBRARY = 2
-    SHARED_LIBRARY = 3
-    MODULE_LIBRARY = 4
-    OBJECT_LIBRARY = 5
-    INTERFACE_LIBRARY = 6
-
-    def __str__(self) -> str:
-        if self == Type.EXECUTABLE:
-            return "EXECUTABLE"
-        elif self == Type.STATIC_LIBRARY:
-            return "STATIC"
-        elif self == Type.SHARED_LIBRARY:
-            return "SHARED"
-        elif self == Type.MODULE_LIBRARY:
-            return "MODULE"
-        elif self == Type.OBJECT_LIBRARY:
-            return "OBJECT"
-        elif self == Type.INTERFACE_LIBRARY:
-            return "INTERFACE"
-        assert False, 'Invalid type'
+    EXECUTABLE = "EXECUTABLE"
+    STATIC_LIBRARY = "STATIC"
+    SHARED_LIBRARY = "SHARED"
+    MODULE_LIBRARY = "MODULE"
+    OBJECT_LIBRARY = "OBJECT"
+    INTERFACE_LIBRARY = "INTERFACE"
 
 
 class Scope(Enum):
-    PUBLIC = 1
-    PRIVATE = 2
-    INTERFACE = 3
+    PUBLIC = "PUBLIC"
+    PRIVATE = "PRIVATE"
+    INTERFACE = "INTERFACE"
 
-    def __str__(self) -> str:
-        if self == Scope.PUBLIC:
-            return "PUBLIC"
-        elif self == Scope.PRIVATE:
-            return "PRIVATE"
-        elif self == Scope.INTERFACE:
-            return "INTERFACE"
-        assert False, 'Invalid scope'
+class Generator(Enum):
+    VS2022 = "Visual Studio 17 2022"
+    VS2019 = "Visual Studio 16 2019"
+    VS2017 = "Visual Studio 15 2017"
+    VS2015 = "Visual Studio 14 2015"
+    VS2013 = "Visual Studio 12 2013"
+    VS2008 = "Visual Studio 9 2008"
+    Borland = "Borland Makefiles"
+    NMake = "NMake Makefiles"
+    NMakeJOM = "NMake Makefiles JOM"
+    MSYS = "MSYS Makefiles"
+    MinGW = "MinGW Makefiles"
+    GreenHills = "Green Hills MULTI"
+    UnixMake = "Unix Makefiles"
+    Ninja = "Ninja"
+    NinjaMulti = "Ninja Multi-Config"
+    Watcom = "Watcom WMake"
+    CodeBlocks = "CodeBlocks - MinGW Makefiles"
+    CodeBlocksNMake = "CodeBlocks - NMake Makefiles"
+    CodeBlocksNMakeJOM = "CodeBlocks - NMake Makefiles JOM"
+    CodeBlocksNinja = "CodeBlocks - Ninja"
+    CodeBlocksUnix = "CodeBlocks - Unix Makefiles"
+    CodeLite = "CodeLite - MinGW Makefiles"
+    CodeLiteNMake = "CodeLite - NMake Makefiles"
+    CodeLiteNinja = "CodeLite - Ninja"
+    CodeLiteUnix = "CodeLite - Unix Makefiles"
+    EclipseCDT4 = "Eclipse CDT4 - MinGW Makefiles"
+    EclipseCDT4NMake = "Eclipse CDT4 - NMake Makefiles"
+    EclipseCDT4Ninja = "Eclipse CDT4 - Ninja"
+    EclipseCDT4Unix = "Eclipse CDT4 - Unix Makefiles"
+    Kate = "Kate - MinGW Makefiles"
+    KateNMake = "Kate - NMake Makefiles"
+    KateNinja = "Kate - Ninja"
+    KateNinjaMulti = "Kate - Ninja Multi-Config"
+    KateUnix = "Kate - Unix Makefiles"
+    SublimeText2 = "Sublime Text 2 - MinGW Makefiles"
+    SublimeText2NMake = "Sublime Text 2 - NMake Makefiles"
+    SublimeText2Ninja = "Sublime Text 2 - Ninja"
+    SublimeText2Unix = "Sublime Text 2 - Unix Makefiles"

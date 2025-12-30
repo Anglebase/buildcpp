@@ -51,6 +51,6 @@ class Target(AbstractTarget):
         result = f"add_executable({self.name})\n"
         for scope in self._sources:
             files = [f'"{item.as_posix()}"' for item in self._sources[scope]]
-            result += f"target_sources({self.name} {str(scope)} {' '.join(files)})\n"
+            result += f"target_sources({self.name} {scope.value} {' '.join(files)})\n"
 
         return result

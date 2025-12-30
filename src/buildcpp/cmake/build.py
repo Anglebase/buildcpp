@@ -1,15 +1,20 @@
 from pathlib import Path
 from .target import AbstractTarget
+from .const import Generator
 from ..const import PROJECT_NAME, BUILD_ROOT
 import os
 import subprocess
 
 
 class Builder:
-    def __init__(self, *, cmake=None) -> None:
+    def __init__(self, *, cmake: Path | None = None) -> None:
+        """
+        Args:
+            - cmake: Path to cmake executable. If None, it will search for cmake in PATH.
+        """
         self.targets = []
 
-        self._cmake = cmake or "cmake"
+        self._cmake = cmake if cmake is not None else "cmake"
         self._check_cmake()
 
     def _check_cmake(self):
@@ -37,8 +42,21 @@ class Builder:
         with open(output_dir / "CMakeLists.txt", 'w+') as f:
             f.write(cmakelists)
 
-    def build(self, *, output_dir: Path = BUILD_ROOT):
+    def build(self, *, output_dir: Path = BUILD_ROOT, generator: Generator | None = None):
         self._gen_cmakelists(output_dir)
-        os.system(
-            f"{self._cmake} -S {output_dir.as_posix()} -B {output_dir.as_posix()}")
-        os.system(f"{self._cmake} --build {output_dir.as_posix()}")
+        cmd = [
+            self._cmake,
+            "-S",
+            output_dir.as_posix(),
+            "-B",
+            output_dir.as_posix(),
+        ]
+        if generator is not None:
+            cmd.extend(["-G", generator.value])
+
+        res = subprocess.run(cmd, shell=True)
+        assert res.returncode == 0, "CMake build failed"
+
+        cmd = [self._cmake, "--build", output_dir.as_posix()]
+        res = subprocess.run(cmd, shell=True)
+        assert res.returncode == 0, "CMake build failed"

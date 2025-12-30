@@ -12,4 +12,4 @@ target = Target('demo')\
 if __name__ == '__main__':
     builder = Builder()
     builder.attach(target)
-    builder.build()
+    builder.build(generator=Generator.MinGW)
