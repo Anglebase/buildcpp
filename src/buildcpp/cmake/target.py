@@ -17,13 +17,11 @@ class AbstractTarget(ABC):
     """
     This abstract class is used for handling dependencies between projects.
     """
-    name_set = set()
 
     def __init__(self, name: str) -> None:
         super().__init__()
 
         self.name = name
-        assert name not in AbstractTarget.name_set, f"Duplicate target name: {name}"
 
         self._depend_on = []
         self.built = False
@@ -38,6 +36,10 @@ class AbstractTarget(ABC):
             all(isinstance(target, AbstractTarget) for target in targets), \
             "Invalid call to depend_on"
         self._depend_on.extend(targets)
+        return self
+
+    def rename(self, new_name: str):
+        self.name = new_name
         return self
 
 
@@ -206,7 +208,6 @@ class Target(AbstractTarget):
         link_libraries = [
             *self.link_libraries, *[dep.name for dep in self._depend_on]
         ]
-        print(link_libraries)
         if len(link_libraries) > 0:
             result += f"target_link_libraries({self.name}\n    {'\n    '.join(link_libraries)}\n)\n"
 

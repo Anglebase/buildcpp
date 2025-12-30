@@ -7,7 +7,7 @@ sys.path.insert(0, Path(__file__).parent.parent.parent.joinpath('src').as_posix(
 from buildcpp import *
 
 lib = Target('add', Type.STATIC_LIBRARY)\
-    .add_sources(Scope.PUBLIC, find_files(SRC_ROOT, 'add.cpp'))\
+    .add_sources(Scope.PUBLIC, find_files(SRC_ROOT, 'add.cpp'))
 
 target = Target('demo')\
     .add_sources(Scope.PUBLIC, find_files(SRC_ROOT, 'main.cpp'))\

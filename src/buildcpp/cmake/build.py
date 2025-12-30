@@ -17,6 +17,8 @@ class Builder:
         self._cmake = cmake if cmake is not None else "cmake"
         self._check_cmake()
 
+        self._name_set = set()
+
     def _check_cmake(self):
         result = subprocess.run(
             [self._cmake, "--version"],
@@ -33,6 +35,10 @@ class Builder:
 
     def _gen_cmakelists_recursive(self, target: AbstractTarget):
         cmakelists = ""
+
+        assert target.name not in self._name_set, f"Duplicate target name: {target.name}"
+        self._name_set.add(target.name)
+
         for dep in target._depend_on:
             cmakelists += self._gen_cmakelists_recursive(dep)
         cmakelists += f"# {target.name}\n"
@@ -43,7 +49,7 @@ class Builder:
     def _gen_cmakelists(self, output_dir: Path):
         output_dir.mkdir(exist_ok=True)
         cmakelists = f"cmake_minimum_required(VERSION 3.15)\n"
-        cmakelists += f"project({PROJECT_NAME})\n"
+        cmakelists += f"project({PROJECT_NAME})\n\n"
 
         for target in self.targets:
             cmakelists += self._gen_cmakelists_recursive(target)
