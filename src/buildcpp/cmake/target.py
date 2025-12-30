@@ -193,7 +193,7 @@ class Target(AbstractTarget):
                 ]
                 if len(files) == 0:
                     continue
-                result += f"{part}({self.name} {scope.value} {' '.join(files)})\n"
+                result += f"{part}({self.name} {scope.value}\n    {'\n    '.join(files)}\n)\n"
 
         if any([prop is not None for prop in self.properties.values()]):
             result += f"set_target_properties({self.name} PROPERTIES\n"
