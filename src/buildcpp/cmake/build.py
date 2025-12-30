@@ -35,6 +35,8 @@ class Builder:
 
     def _gen_cmakelists_recursive(self, target: AbstractTarget):
         cmakelists = ""
+        if target.built:
+            return cmakelists
 
         assert target.name not in self._name_set, f"Duplicate target name: {target.name}"
         self._name_set.add(target.name)
@@ -44,6 +46,8 @@ class Builder:
         cmakelists += f"# {target.name}\n"
         cmakelists += target.to_cmake()
         cmakelists += "\n"
+
+        target.built = True
         return cmakelists
 
     def _gen_cmakelists(self, output_dir: Path):
