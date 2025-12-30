@@ -24,6 +24,7 @@ class Target(AbstractTarget):
     """
     The standrad target in CMake.
     """
+
     def __init__(self, name: str, type: Type = Type.EXECUTABLE) -> None:
         super().__init__(name)
 
@@ -75,6 +76,12 @@ class Target(AbstractTarget):
                 Scope.PUBLIC: [],
                 Scope.INTERFACE: [],
             },
+        }
+        self.properties: dict[str, str | None] = {
+            "C_STANDARD": None,
+            "C_STANDARD_REQUIRED": None,
+            "CXX_STANDARD": None,
+            "CXX_STANDARD_REQUIRED": None,
         }
 
     def __expand(self, ls) -> list:
@@ -146,6 +153,10 @@ class Target(AbstractTarget):
         self.meta["target_precompile_headers"][scope].extend(items)
         return self
 
+    def set_property(self, key: str, value: str):
+        self.properties[key] = value
+        return self
+
     def _deal(self, item):
         if isinstance(item, str):
             return item
@@ -153,6 +164,21 @@ class Target(AbstractTarget):
             return item.as_posix()
         else:
             raise ValueError(f"Invalid item: {item}")
+
+    def add_define(self, scope: Scope, key: str, value: str | None = None):
+        define = key + (f"={value}" if value is not None else "")
+        self.add_defines(scope, define)
+        return self
+
+    def c_standard(self, standard: int, required: bool = True):
+        self.set_property("C_STANDARD", str(standard))
+        self.set_property("C_STANDARD_REQUIRED", "ON" if required else "OFF")
+        return self
+
+    def cxx_standard(self, standard: int, required: bool = True):
+        self.set_property("CXX_STANDARD", str(standard))
+        self.set_property("CXX_STANDARD_REQUIRED", "ON" if required else "OFF")
+        return self
 
     def to_cmake(self) -> str:
         if self.type == Type.EXECUTABLE:
@@ -169,9 +195,11 @@ class Target(AbstractTarget):
                     continue
                 result += f"{part}({self.name} {scope.value} {' '.join(files)})\n"
 
-        return result
+        if any([prop is not None for prop in self.properties.values()]):
+            result += f"set_target_properties({self.name} PROPERTIES\n"
+            for key in self.properties:
+                if self.properties[key] is not None:
+                    result += f"    {key} {self.properties[key]}\n"
+            result += ")\n"
 
-    def add_define(self, scope: Scope, key: str, value: str | None = None):
-        define = key + (f"={value}" if value is not None else "")
-        self.add_defines(scope, define)
-        return self
+        return result
