@@ -31,13 +31,22 @@ class Builder:
     def attach(self, target: AbstractTarget):
         self.targets.append(target)
 
+    def _gen_cmakelists_recursive(self, target: AbstractTarget):
+        cmakelists = ""
+        for dep in target._depend_on:
+            cmakelists += self._gen_cmakelists_recursive(dep)
+        cmakelists += f"# {target.name}\n"
+        cmakelists += target.to_cmake()
+        cmakelists += "\n"
+        return cmakelists
+
     def _gen_cmakelists(self, output_dir: Path):
         output_dir.mkdir(exist_ok=True)
         cmakelists = f"cmake_minimum_required(VERSION 3.15)\n"
         cmakelists += f"project({PROJECT_NAME})\n"
 
         for target in self.targets:
-            cmakelists += target.to_cmake()
+            cmakelists += self._gen_cmakelists_recursive(target)
 
         with open(output_dir / "CMakeLists.txt", 'w+') as f:
             f.write(cmakelists)

@@ -3,6 +3,16 @@ from .const import *
 from pathlib import Path
 
 
+def _expand(ls) -> list:
+    result = []
+    for item in ls:
+        if isinstance(item, list):
+            result.extend(_expand(item))
+        else:
+            result.append(item)
+    return result
+
+
 class AbstractTarget(ABC):
     """
     This abstract class is used for handling dependencies between projects.
@@ -15,9 +25,20 @@ class AbstractTarget(ABC):
         self.name = name
         assert name not in AbstractTarget.name_set, f"Duplicate target name: {name}"
 
+        self._depend_on = []
+        self.built = False
+
     @abstractmethod
     def to_cmake(self) -> str:
         pass
+
+    def depend_on(self, *targets, allow_invaild=False):
+        targets = _expand(targets)
+        assert allow_invaild or len(targets) > 0 and \
+            all(isinstance(target, AbstractTarget) for target in targets), \
+            "Invalid call to depend_on"
+        self._depend_on.extend(targets)
+        return self
 
 
 class Target(AbstractTarget):
@@ -56,11 +77,6 @@ class Target(AbstractTarget):
                 Scope.PUBLIC: [],
                 Scope.INTERFACE: [],
             },
-            "target_link_libraries": {
-                Scope.PRIVATE: [],
-                Scope.PUBLIC: [],
-                Scope.INTERFACE: [],
-            },
             "target_link_options": {
                 Scope.PRIVATE: [],
                 Scope.PUBLIC: [],
@@ -77,6 +93,7 @@ class Target(AbstractTarget):
                 Scope.INTERFACE: [],
             },
         }
+        self.link_libraries = []
         self.properties: dict[str, str | None] = {
             "C_STANDARD": None,
             "C_STANDARD_REQUIRED": None,
@@ -84,17 +101,8 @@ class Target(AbstractTarget):
             "CXX_STANDARD_REQUIRED": None,
         }
 
-    def __expand(self, ls) -> list:
-        result = []
-        for item in ls:
-            if isinstance(item, list):
-                result.extend(self.__expand(item))
-            else:
-                result.append(item)
-        return result
-
     def add_sources(self, scope: Scope, *sources, allow_invaild=False):
-        items = self.__expand(sources)
+        items = _expand(sources)
         assert allow_invaild or len(items) > 0 and \
             all(isinstance(item, Path)for item in items), \
             "Invalid call to add_source"
@@ -102,7 +110,7 @@ class Target(AbstractTarget):
         return self
 
     def add_includes(self, scope: Scope, *directories, allow_invaild=False):
-        items = self.__expand(directories)
+        items = _expand(directories)
         assert allow_invaild or len(items) > 0 and \
             all(isinstance(item, Path)for item in items), \
             "Invalid call to add_include_directories"
@@ -110,45 +118,45 @@ class Target(AbstractTarget):
         return self
 
     def add_defines(self, scope: Scope, *definitions, allow_invaild=False):
-        items = self.__expand(definitions)
+        items = _expand(definitions)
         assert allow_invaild or len(items) > 0
         self.meta["target_compile_definitions"][scope].extend(items)
         return self
 
     def add_compile_features(self, scope: Scope, *features, allow_invaild=False):
-        items = self.__expand(features)
+        items = _expand(features)
         assert allow_invaild or len(items) > 0
         self.meta["target_compile_features"][scope].extend(items)
         return self
 
     def add_compile_options(self, scope: Scope, *options, allow_invaild=False):
-        items = self.__expand(options)
+        items = _expand(options)
         assert allow_invaild or len(items) > 0
         self.meta["target_compile_options"][scope].extend(items)
         return self
 
     def add_link_directories(self, scope: Scope, *directories, allow_invaild=False):
-        items = self.__expand(directories)
+        items = _expand(directories)
         assert allow_invaild or len(items) > 0 and \
             all(isinstance(item, Path)for item in items), \
             "Invalid call to add_link_directories"
         self.meta["target_link_directories"][scope].extend(items)
         return self
 
-    def add_link_libraries(self, scope: Scope, *libraries, allow_invaild=False):
-        items = self.__expand(libraries)
+    def add_link_libraries(self, *libraries, allow_invaild=False):
+        items = _expand(libraries)
         assert allow_invaild or len(items) > 0
-        self.meta["target_link_libraries"][scope].extend(items)
+        self.link_libraries.extend(items)
         return self
 
     def add_link_options(self, scope: Scope, *options, allow_invaild=False):
-        items = self.__expand(options)
+        items = _expand(options)
         assert allow_invaild or len(items) > 0
         self.meta["target_link_options"][scope].extend(items)
         return self
 
     def add_precompile_headers(self, scope: Scope, *headers, allow_invaild=False):
-        items = self.__expand(headers)
+        items = _expand(headers)
         assert allow_invaild or len(items) > 0
         self.meta["target_precompile_headers"][scope].extend(items)
         return self
@@ -194,6 +202,13 @@ class Target(AbstractTarget):
                 if len(files) == 0:
                     continue
                 result += f"{part}({self.name} {scope.value}\n    {'\n    '.join(files)}\n)\n"
+
+        link_libraries = [
+            *self.link_libraries, *[dep.name for dep in self._depend_on]
+        ]
+        print(link_libraries)
+        if len(link_libraries) > 0:
+            result += f"target_link_libraries({self.name}\n    {'\n    '.join(link_libraries)}\n)\n"
 
         if any([prop is not None for prop in self.properties.values()]):
             result += f"set_target_properties({self.name} PROPERTIES\n"
