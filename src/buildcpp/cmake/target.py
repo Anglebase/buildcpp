@@ -105,13 +105,13 @@ class Target(AbstractTarget):
         self.meta["target_compile_definitions"][scope].extend(items)
         return self
 
-    def add_features(self, scope: Scope, *features, allow_invaild=False):
+    def add_compile_features(self, scope: Scope, *features, allow_invaild=False):
         items = self.__expand(features)
         assert allow_invaild or len(items) > 0
         self.meta["target_compile_features"][scope].extend(items)
         return self
 
-    def add_options(self, scope: Scope, *options, allow_invaild=False):
+    def add_compile_options(self, scope: Scope, *options, allow_invaild=False):
         items = self.__expand(options)
         assert allow_invaild or len(items) > 0
         self.meta["target_compile_options"][scope].extend(items)
