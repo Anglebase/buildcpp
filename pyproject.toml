@@ -3,7 +3,7 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "pycmake"
+name = "buildcpp"
 version = "0.0.1"
 description = "A build system for C++."
 readme = "README.md"

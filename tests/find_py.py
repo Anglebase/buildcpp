@@ -1,4 +1,4 @@
-from pycmake import find_files
+from buildcpp import find_files
 
 if __name__ == '__main__':
     print(find_files(r'src', '*.py'))
