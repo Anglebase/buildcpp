@@ -219,3 +219,6 @@ class Target(AbstractTarget):
             result += ")\n"
 
         return result
+
+    def __str__(self) -> str:
+        return f"Target({self.name}, type={self.type.value})"
