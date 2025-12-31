@@ -12,5 +12,5 @@ license = "MIT"
 license-files = ["LICENSE"]
 
 [project.urls]
-Homepage = "https://github.com/Anglebase/buildcpp"
+Homepage = "https://anglebase.github.io/buildcpp/"
 IssueTracker = "https://github.com/Anglebase/buildcpp/issues"
