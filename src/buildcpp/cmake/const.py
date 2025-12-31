@@ -2,6 +2,9 @@ from enum import Enum
 
 
 class Type(Enum):
+    """
+    Basic target types.
+    """
     EXECUTABLE = "EXECUTABLE"
     STATIC_LIBRARY = "STATIC"
     SHARED_LIBRARY = "SHARED"
@@ -11,11 +14,23 @@ class Type(Enum):
 
 
 class Scope(Enum):
+    """
+    Scope of action.
+
+    Some functions expect to accept an enumeration value indicating their scope of action.
+    - `PUBLIC` means that the item is visible to itself and all targets that depend on it.
+    - `PRIVATE` means that the item is only visible to itself.
+    - `INTERFACE` A means that the item is only visible to its dependencies.
+    """
     PUBLIC = "PUBLIC"
     PRIVATE = "PRIVATE"
     INTERFACE = "INTERFACE"
 
+
 class Generator(Enum):
+    """
+    All supported generators.
+    """
     VS2022 = "Visual Studio 17 2022"
     VS2019 = "Visual Studio 16 2019"
     VS2017 = "Visual Studio 15 2017"

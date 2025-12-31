@@ -59,7 +59,7 @@ Here, we first create a `Target` object named `demo`. We then add source files t
 
 We then create a `Builder` object, attach the target to it, and call the `build` method to generate the Makefile and compile the project.
 
-For more detailed information, check out the [documentation](https://github.com/Anglebase/buildcpp/blob/master/docs/tutorial.md).
+For more detailed information, check out the code documentation.
 
 ## LICENSE
 

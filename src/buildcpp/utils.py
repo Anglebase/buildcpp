@@ -4,6 +4,10 @@ from pathlib import Path
 
 
 def find_files(directory, pattern, recursive=False):
+    """
+    Find all files in `directory` that match `pattern`. If `recursive` is True,
+    it will search recursively in all subdirectories.
+    """
     matches = []
 
     if recursive:
@@ -19,6 +23,10 @@ def find_files(directory, pattern, recursive=False):
 
 
 def find_directories(directory, pattern, recursive=False):
+    """
+    Find all directories in `directory` that match `pattern`. If `recursive` is True,
+    it will search recursively in all subdirectories.
+    """
     matches = []
 
     if recursive:

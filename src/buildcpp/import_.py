@@ -4,11 +4,14 @@ from .cmake.target import AbstractTarget
 
 def import_project(buildcpp: Path) -> dict:
     """
-    Import a third-party buildcpp project.
+    Import a third-party buildcpp project from the path `buildcpp`.
+    If the path points to the root directory of a third-party project,
+    it will attempt to find a Python file with the same name as the
+    folder in that directory, assuming it is the project's build script.
 
-    If `buildcpp` is a directory, It will try to find a Python file
-    with the same name as the folder in that folder.
+    The imported project construction script should have the `export` attribute.
     """
+    # Get the project directory and name
     if buildcpp.is_dir():
         buildcpp = buildcpp / (buildcpp.name + '.py')
     if not buildcpp.is_file():
@@ -16,6 +19,7 @@ def import_project(buildcpp: Path) -> dict:
     project_dir = buildcpp.parent
     project_name = project_dir.name.split('.')[0]
 
+    # Import the build script as a module.
     import sys
     sys.path.insert(0, project_dir.as_posix())
     try:
@@ -25,10 +29,12 @@ def import_project(buildcpp: Path) -> dict:
     finally:
         sys.path.remove(project_dir.as_posix())
 
+    # Check if the module exports a valid target.
     if not hasattr(module, 'export'):
         raise ImportError(
             f"Project '{buildcpp}' is not an importable project.")
 
+    # Return the exported target(s) as a dictionary.
     if isinstance(module.export, AbstractTarget):
         return {module.export.name: module.export}
     elif isinstance(module.export, list) and all(isinstance(t, AbstractTarget) for t in module.export):
