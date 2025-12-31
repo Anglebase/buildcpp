@@ -59,6 +59,7 @@ el.replaceWith(d);
     &#34;&#34;&#34;
     The builder is responsible for generating CMake scripts and executing the build.
     &#34;&#34;&#34;
+
     def __init__(self, *, cmake: Path | None = None) -&gt; None:
         &#34;&#34;&#34;
         `cmake` is used to indicate the path where the CMake executable file is located.
@@ -94,7 +95,8 @@ el.replaceWith(d);
         &#34;&#34;&#34;
         targets = _expand(targets)
         assert allow_invaild or len(targets) &gt; 0, &#34;No target specified&#34;
-        assert all(isinstance(t, AbstractTarget) for t in targets), &#34;Invalid target&#34;
+        assert all(isinstance(t, AbstractTarget)
+                   for t in targets), &#34;Invalid target&#34;
         self.targets.extend(targets)
 
     def _gen_cmakelists_recursive(self, target: AbstractTarget):
@@ -138,13 +140,15 @@ el.replaceWith(d);
         with open(output_dir / &#34;CMakeLists.txt&#34;, &#39;w+&#39;) as f:
             f.write(cmakelists)
 
-    def build(self, *, output_dir: Path = BUILD_ROOT, generator: Generator | None = None):
+    def build(self, *, output_dir: Path | None = None, generator: Generator | None = None):
         &#34;&#34;&#34;
         Instruct to start the construction process. `output_dir` indicates the
         directory where the build is located, which by default is the build
         directory in the root directory of the project. `generator` indicates
         the generator to be used, and if not specified, it is determined by CMake.
         &#34;&#34;&#34;
+        if output_dir is None:
+            output_dir = BUILD_ROOT
         # Generate the CMakeLists.txt file.
         self._gen_cmakelists(output_dir)
 
@@ -188,7 +192,8 @@ environment variables.</p></div>
     &#34;&#34;&#34;
     targets = _expand(targets)
     assert allow_invaild or len(targets) &gt; 0, &#34;No target specified&#34;
-    assert all(isinstance(t, AbstractTarget) for t in targets), &#34;Invalid target&#34;
+    assert all(isinstance(t, AbstractTarget)
+               for t in targets), &#34;Invalid target&#34;
     self.targets.extend(targets)</code></pre>
 </details>
 <div class="desc"><p>Use the targets included in the <code>targets</code> as the targets to be built by the builder.
@@ -196,20 +201,22 @@ environment variables.</p></div>
 included in the <code>targets</code> list.</p></div>
 </dd>
 <dt id="buildcpp.cmake.build.Builder.build"><code class="name flex">
-<span>def <span class="ident">build</span></span>(<span>self,<br>*,<br>output_dir: pathlib._local.Path = BUILD_ROOT,<br>generator: <a title="buildcpp.cmake.const.Generator" href="const.html#buildcpp.cmake.const.Generator">Generator</a> | None = None)</span>
+<span>def <span class="ident">build</span></span>(<span>self,<br>*,<br>output_dir: pathlib._local.Path | None = None,<br>generator: <a title="buildcpp.cmake.const.Generator" href="const.html#buildcpp.cmake.const.Generator">Generator</a> | None = None)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def build(self, *, output_dir: Path = BUILD_ROOT, generator: Generator | None = None):
+<pre><code class="python">def build(self, *, output_dir: Path | None = None, generator: Generator | None = None):
     &#34;&#34;&#34;
     Instruct to start the construction process. `output_dir` indicates the
     directory where the build is located, which by default is the build
     directory in the root directory of the project. `generator` indicates
     the generator to be used, and if not specified, it is determined by CMake.
     &#34;&#34;&#34;
+    if output_dir is None:
+        output_dir = BUILD_ROOT
     # Generate the CMakeLists.txt file.
     self._gen_cmakelists(output_dir)
 
