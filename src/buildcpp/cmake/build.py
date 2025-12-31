@@ -10,6 +10,7 @@ class Builder:
     """
     The builder is responsible for generating CMake scripts and executing the build.
     """
+
     def __init__(self, *, cmake: Path | None = None) -> None:
         """
         `cmake` is used to indicate the path where the CMake executable file is located.
@@ -45,7 +46,8 @@ class Builder:
         """
         targets = _expand(targets)
         assert allow_invaild or len(targets) > 0, "No target specified"
-        assert all(isinstance(t, AbstractTarget) for t in targets), "Invalid target"
+        assert all(isinstance(t, AbstractTarget)
+                   for t in targets), "Invalid target"
         self.targets.extend(targets)
 
     def _gen_cmakelists_recursive(self, target: AbstractTarget):
@@ -89,13 +91,15 @@ class Builder:
         with open(output_dir / "CMakeLists.txt", 'w+') as f:
             f.write(cmakelists)
 
-    def build(self, *, output_dir: Path = BUILD_ROOT, generator: Generator | None = None):
+    def build(self, *, output_dir: Path | None = None, generator: Generator | None = None):
         """
         Instruct to start the construction process. `output_dir` indicates the
         directory where the build is located, which by default is the build
         directory in the root directory of the project. `generator` indicates
         the generator to be used, and if not specified, it is determined by CMake.
         """
+        if output_dir is None:
+            output_dir = BUILD_ROOT
         # Generate the CMakeLists.txt file.
         self._gen_cmakelists(output_dir)
 
