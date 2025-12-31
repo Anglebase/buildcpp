@@ -1,0 +1,7 @@
+site_name: buildcpp
+theme:
+  name: material
+
+nav:
+  - Home: index.md
+  - Documentation: buildcpp/index.html
