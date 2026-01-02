@@ -15,4 +15,4 @@ nav:
   - Home: index.md
   - Getting Started: quick.md
   - Extension: ext.md
-  - Documentation: doc.html
+  - Documentation: buildcpp/index.html
