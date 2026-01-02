@@ -17,7 +17,7 @@ def import_project(buildcpp: Path) -> dict:
     if not buildcpp.is_file():
         raise FileNotFoundError(f"Cannot find buildcpp project '{buildcpp}'")
     project_dir = buildcpp.parent
-    project_name = project_dir.name.split('.')[0]
+    project_name = buildcpp.name.split('.')[0]
 
     # Import the build script as a module.
     import sys
