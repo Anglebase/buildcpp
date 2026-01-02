@@ -46,3 +46,9 @@ if __name__ == '__main__':
 
 Even without prior Python experience, you can likely understand what’s happening if you’re familiar with C++.  
 The `Target` object is central to Buildcpp—it holds all the metadata needed for the build, much like a configuration file.
+
+If you want to learn more, check out the [documentation](https://anglebase.github.io/buildcpp/site/quick/).
+
+## LICENSE
+
+This project is licensed under the MIT license.
