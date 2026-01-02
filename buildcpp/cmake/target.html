@@ -1,0 +1,865 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>buildcpp.cmake.target API documentation</title>
+<meta name="description" content="">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>buildcpp.cmake.target</code></h1>
+</header>
+<section id="section-intro">
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="buildcpp.cmake.target.AbstractTarget"><code class="flex name class">
+<span>class <span class="ident">AbstractTarget</span></span>
+<span>(</span><span>name: str)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AbstractTarget(ABC):
+    &#34;&#34;&#34;
+    This class is an extension interface for buildcpp.
+    &#34;&#34;&#34;
+
+    def __init__(self, name: str) -&gt; None:
+        &#34;&#34;&#34;
+        Create a target instance with the name `name`.
+        &#34;&#34;&#34;
+        super().__init__()
+
+        self.name = name
+
+        self._depend_on = []
+        self.built = False
+
+    @abstractmethod
+    def to_cmake(self) -&gt; str:
+        &#34;&#34;&#34;
+        Rewrite this abstract method to define how to convert the target model to the CMake code.
+        &#34;&#34;&#34;
+        pass
+
+    def depend_on(self, *targets, allow_invaild=False):
+        &#34;&#34;&#34;
+        Define the dependency relationships between targets.
+
+        Indicates that the current target depends on all targets contained in `targets`.
+        `allow_invaild` indicates whether the script should continue to run if it is not
+        included in the `targets` list.
+        &#34;&#34;&#34;
+        targets = _expand(targets)
+        assert allow_invaild or len(targets) &gt; 0 and \
+            all(isinstance(target, AbstractTarget) for target in targets), \
+            &#34;Invalid call to depend_on&#34;
+        self._depend_on.extend(targets)
+        return self
+
+    def rename(self, new_name: str):
+        self.name = new_name
+        return self</code></pre>
+</details>
+<div class="desc"><p>This class is an extension interface for buildcpp.</p>
+<p>Create a target instance with the name <code>name</code>.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>abc.ABC</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="buildcpp.cmake.target.Target" href="#buildcpp.cmake.target.Target">Target</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="buildcpp.cmake.target.AbstractTarget.depend_on"><code class="name flex">
+<span>def <span class="ident">depend_on</span></span>(<span>self, *targets, allow_invaild=False)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def depend_on(self, *targets, allow_invaild=False):
+    &#34;&#34;&#34;
+    Define the dependency relationships between targets.
+
+    Indicates that the current target depends on all targets contained in `targets`.
+    `allow_invaild` indicates whether the script should continue to run if it is not
+    included in the `targets` list.
+    &#34;&#34;&#34;
+    targets = _expand(targets)
+    assert allow_invaild or len(targets) &gt; 0 and \
+        all(isinstance(target, AbstractTarget) for target in targets), \
+        &#34;Invalid call to depend_on&#34;
+    self._depend_on.extend(targets)
+    return self</code></pre>
+</details>
+<div class="desc"><p>Define the dependency relationships between targets.</p>
+<p>Indicates that the current target depends on all targets contained in <code>targets</code>.
+<code>allow_invaild</code> indicates whether the script should continue to run if it is not
+included in the <code>targets</code> list.</p></div>
+</dd>
+<dt id="buildcpp.cmake.target.AbstractTarget.rename"><code class="name flex">
+<span>def <span class="ident">rename</span></span>(<span>self, new_name: str)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def rename(self, new_name: str):
+    self.name = new_name
+    return self</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="buildcpp.cmake.target.AbstractTarget.to_cmake"><code class="name flex">
+<span>def <span class="ident">to_cmake</span></span>(<span>self) ‑> str</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@abstractmethod
+def to_cmake(self) -&gt; str:
+    &#34;&#34;&#34;
+    Rewrite this abstract method to define how to convert the target model to the CMake code.
+    &#34;&#34;&#34;
+    pass</code></pre>
+</details>
+<div class="desc"><p>Rewrite this abstract method to define how to convert the target model to the CMake code.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="buildcpp.cmake.target.Target"><code class="flex name class">
+<span>class <span class="ident">Target</span></span>
+<span>(</span><span>name: str,<br>type: <a title="buildcpp.cmake.const.Type" href="const.html#buildcpp.cmake.const.Type">Type</a> = Type.EXECUTABLE)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Target(AbstractTarget):
+    &#34;&#34;&#34;
+    The standrad target in CMake.
+    &#34;&#34;&#34;
+
+    def __init__(self, name: str, type: Type = Type.EXECUTABLE) -&gt; None:
+        &#34;&#34;&#34;
+        Create a type `type` construction target with the name `name`.
+        &#34;&#34;&#34;
+        super().__init__(name)
+
+        self.type = type
+
+        self.meta = {
+            &#34;target_compile_definitions&#34;: {
+                Scope.PRIVATE: [],
+                Scope.PUBLIC: [],
+                Scope.INTERFACE: [],
+            },
+            &#34;target_compile_features&#34;: {
+                Scope.PRIVATE: [],
+                Scope.PUBLIC: [],
+                Scope.INTERFACE: [],
+            },
+            &#34;target_compile_options&#34;: {
+                Scope.PRIVATE: [],
+                Scope.PUBLIC: [],
+                Scope.INTERFACE: [],
+            },
+            &#34;target_include_directories&#34;: {
+                Scope.PRIVATE: [],
+                Scope.PUBLIC: [],
+                Scope.INTERFACE: [],
+            },
+            &#34;target_link_directories&#34;: {
+                Scope.PRIVATE: [],
+                Scope.PUBLIC: [],
+                Scope.INTERFACE: [],
+            },
+            &#34;target_link_options&#34;: {
+                Scope.PRIVATE: [],
+                Scope.PUBLIC: [],
+                Scope.INTERFACE: [],
+            },
+            &#34;target_precompile_headers&#34;: {
+                Scope.PRIVATE: [],
+                Scope.PUBLIC: [],
+                Scope.INTERFACE: [],
+            },
+            &#34;target_sources&#34;: {
+                Scope.PRIVATE: [],
+                Scope.PUBLIC: [],
+                Scope.INTERFACE: [],
+            },
+        }
+        self.link_libraries = []
+        self.properties: dict[str, str | None] = {
+            &#34;C_STANDARD&#34;: None,
+            &#34;C_STANDARD_REQUIRED&#34;: None,
+            &#34;CXX_STANDARD&#34;: None,
+            &#34;CXX_STANDARD_REQUIRED&#34;: None,
+        }
+
+    def add_sources(self, scope: Scope, *sources, allow_invaild=False):
+        &#34;&#34;&#34;
+        Add source files to the target.
+
+        `scope` indicates the scope of the source files.
+        `sources` is a list of source files.
+        `allow_invaild` indicates whether the script should continue to run if `sources` is empty.
+        &#34;&#34;&#34;
+        items = _expand(sources)
+        assert allow_invaild or len(items) &gt; 0, &#34;Invalid call to add_sources&#34;
+        assert all(isinstance(i, Path) for i in items), &#34;Invalid argument&#34;
+        self.meta[&#34;target_sources&#34;][scope].extend(items)
+        return self
+
+    def add_includes(self, scope: Scope, *directories, allow_invaild=False):
+        &#34;&#34;&#34;
+        Add include directories to the target.
+
+        `scope` indicates the scope of the include directories.
+        `directories` is a list of include directories.
+        `allow_invaild` indicates whether the script should continue to run if `directories` is empty.
+        &#34;&#34;&#34;
+        items = _expand(directories)
+        assert allow_invaild or len(items) &gt; 0, &#34;Invalid call to add_includes&#34;
+        assert all(isinstance(i, Path) for i in items), &#34;Invalid argument&#34;
+        self.meta[&#34;target_include_directories&#34;][scope].extend(items)
+        return self
+
+    def add_defines(self, scope: Scope, *, allow_invaild=False, **defines):
+        &#34;&#34;&#34;
+        Add preprocessor definitions to the target.
+
+        `scope` indicates the scope of the definitions.
+        `defines` is a dictionary of preprocessor definitions.
+        `allow_invaild` indicates whether the script should continue to run if `definitions` is empty.
+        &#34;&#34;&#34;
+        assert allow_invaild or len(defines) &gt; 0, &#34;Invalid call to add_defines&#34;
+        def check(d, i): return isinstance(d[i], str) or d[i] is None
+        assert all(check(defines, i) for i in defines), &#34;Invalid argument&#34;
+        def tostr(k, v): return f&#34;{k}={v}&#34; if v is not None else k
+        items = [tostr(k, v) for k, v in defines.items()]
+        self.meta[&#34;target_compile_definitions&#34;][scope].extend(items)
+        return self
+
+    def add_compile_features(self, scope: Scope, *features, allow_invaild=False):
+        &#34;&#34;&#34;
+        Add compile features to the target.
+
+        `scope` indicates the scope of the features.
+        `features` is a list of compile features.
+        `allow_invaild` indicates whether the script should continue to run if `features` is empty.
+        &#34;&#34;&#34;
+        items = _expand(features)
+        assert allow_invaild or len(items) &gt; 0
+        self.meta[&#34;target_compile_features&#34;][scope].extend(items)
+        return self
+
+    def add_compile_options(self, scope: Scope, *options, allow_invaild=False):
+        &#34;&#34;&#34;
+        Add compile options to the target.
+
+        `scope` indicates the scope of the options.
+        `options` is a list of compile options.
+        `allow_invaild` indicates whether the script should continue to run if `options` is empty.
+        &#34;&#34;&#34;
+        items = _expand(options)
+        assert allow_invaild or len(items) &gt; 0
+        self.meta[&#34;target_compile_options&#34;][scope].extend(items)
+        return self
+
+    def add_link_directories(self, scope: Scope, *directories, allow_invaild=False):
+        &#34;&#34;&#34;
+        Add link directories to the target.
+
+        `scope` indicates the scope of the link directories.
+        `directories` is a list of link directories.
+        `allow_invaild` indicates whether the script should continue to run if `directories` is empty.
+        &#34;&#34;&#34;
+        items = _expand(directories)
+        assert allow_invaild or len(
+            items) &gt; 0, &#34;Invalid call to add_link_directories&#34;
+        assert all(isinstance(i, Path) for i in items), &#34;Invalid argument&#34;
+        self.meta[&#34;target_link_directories&#34;][scope].extend(items)
+        return self
+
+    def add_link_libraries(self, *libraries, allow_invaild=False):
+        &#34;&#34;&#34;
+        Add link libraries to the target.
+
+        `libraries` is a list of link libraries.
+        `allow_invaild` indicates whether the script should continue to run if `libraries` is empty.
+        &#34;&#34;&#34;
+        items = _expand(libraries)
+        assert allow_invaild or len(items) &gt; 0
+        self.link_libraries.extend(items)
+        return self
+
+    def add_link_options(self, scope: Scope, *options, allow_invaild=False):
+        &#34;&#34;&#34;
+        Add link options to the target.
+
+        `scope` indicates the scope of the options.
+        `options` is a list of link options.
+        `allow_invaild` indicates whether the script should continue to run if `options` is empty.
+        &#34;&#34;&#34;
+        items = _expand(options)
+        assert allow_invaild or len(items) &gt; 0
+        self.meta[&#34;target_link_options&#34;][scope].extend(items)
+        return self
+
+    def add_precompile_headers(self, scope: Scope, *headers, allow_invaild=False):
+        &#34;&#34;&#34;
+        Add precompile headers to the target.
+
+        `scope` indicates the scope of the headers.
+        `headers` is a list of precompile headers.
+        `allow_invaild` indicates whether the script should continue to run if `headers` is empty.
+        &#34;&#34;&#34;
+        items = _expand(headers)
+        assert allow_invaild or len(items) &gt; 0
+        self.meta[&#34;target_precompile_headers&#34;][scope].extend(items)
+        return self
+
+    def set_properties(self, **kwargs):
+        &#34;&#34;&#34;
+        Set a property of the target.
+
+        `kwargs` is a dictionary of properties.
+        &#34;&#34;&#34;
+        for key in kwargs:
+            self.properties[key] = kwargs[key]
+        return self
+
+    def _deal(self, item):
+        if isinstance(item, str):
+            return item
+        elif isinstance(item, Path):
+            return item.as_posix()
+        else:
+            raise ValueError(f&#34;Invalid item: {item}&#34;)
+
+    def c_standard(self, standard: int, required: bool = True):
+        &#34;&#34;&#34;
+        Set the C standard of the target.
+
+        `standard` is the C standard to be used.
+        `required` indicates whether the C standard is required.
+        &#34;&#34;&#34;
+        self.set_properties(C_STANDARD=str(standard))
+        self.set_properties(C_STANDARD_REQUIRED=&#34;ON&#34; if required else &#34;OFF&#34;)
+        return self
+
+    def cxx_standard(self, standard: int, required: bool = True):
+        &#34;&#34;&#34;
+        Set the C++ standard of the target.
+
+        `standard` is the C++ standard to be used.
+        `required` indicates whether the C++ standard is required.
+        &#34;&#34;&#34;
+        self.set_properties(CXX_STANDARD=str(standard))
+        self.set_properties(CXX_STANDARD_REQUIRED=&#34;ON&#34; if required else &#34;OFF&#34;)
+        return self
+
+    def to_cmake(self) -&gt; str:
+        &#34;&#34;&#34;
+        Rewrite this method to define how to convert the target model to the CMake code.
+        &#34;&#34;&#34;
+        if self.type == Type.EXECUTABLE:
+            result = f&#34;add_executable({self.name})\n&#34;
+        else:
+            result = f&#34;add_library({self.name} {self.type.value})\n&#34;
+
+        for part in self.meta:
+            for scope in self.meta[part]:
+                files = [
+                    f&#39;&#34;{self._deal(item)}&#34;&#39; for item in self.meta[part][scope]
+                ]
+                if len(files) == 0:
+                    continue
+                result += f&#34;{part}({self.name} {scope.value}\n    {&#39;\n    &#39;.join(files)}\n)\n&#34;
+
+        link_libraries = [
+            *self.link_libraries, *[dep.name for dep in self._depend_on]
+        ]
+        if len(link_libraries) &gt; 0:
+            result += f&#34;target_link_libraries({self.name}\n    {&#39;\n    &#39;.join(link_libraries)}\n)\n&#34;
+
+        if any([prop is not None for prop in self.properties.values()]):
+            result += f&#34;set_target_properties({self.name} PROPERTIES\n&#34;
+            for key in self.properties:
+                if self.properties[key] is not None:
+                    result += f&#34;    {key} {self.properties[key]}\n&#34;
+            result += &#34;)\n&#34;
+
+        return result
+
+    def __str__(self) -&gt; str:
+        &#34;&#34;&#34;
+        Format the target as a string.
+        &#34;&#34;&#34;
+        return f&#34;Target({self.name}, type={self.type.value})&#34;</code></pre>
+</details>
+<div class="desc"><p>The standrad target in CMake.</p>
+<p>Create a type <code>type</code> construction target with the name <code>name</code>.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="buildcpp.cmake.target.AbstractTarget" href="#buildcpp.cmake.target.AbstractTarget">AbstractTarget</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="buildcpp.cmake.target.Target.add_compile_features"><code class="name flex">
+<span>def <span class="ident">add_compile_features</span></span>(<span>self,<br>scope: <a title="buildcpp.cmake.const.Scope" href="const.html#buildcpp.cmake.const.Scope">Scope</a>,<br>*features,<br>allow_invaild=False)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_compile_features(self, scope: Scope, *features, allow_invaild=False):
+    &#34;&#34;&#34;
+    Add compile features to the target.
+
+    `scope` indicates the scope of the features.
+    `features` is a list of compile features.
+    `allow_invaild` indicates whether the script should continue to run if `features` is empty.
+    &#34;&#34;&#34;
+    items = _expand(features)
+    assert allow_invaild or len(items) &gt; 0
+    self.meta[&#34;target_compile_features&#34;][scope].extend(items)
+    return self</code></pre>
+</details>
+<div class="desc"><p>Add compile features to the target.</p>
+<p><code>scope</code> indicates the scope of the features.
+<code>features</code> is a list of compile features.
+<code>allow_invaild</code> indicates whether the script should continue to run if <code>features</code> is empty.</p></div>
+</dd>
+<dt id="buildcpp.cmake.target.Target.add_compile_options"><code class="name flex">
+<span>def <span class="ident">add_compile_options</span></span>(<span>self,<br>scope: <a title="buildcpp.cmake.const.Scope" href="const.html#buildcpp.cmake.const.Scope">Scope</a>,<br>*options,<br>allow_invaild=False)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_compile_options(self, scope: Scope, *options, allow_invaild=False):
+    &#34;&#34;&#34;
+    Add compile options to the target.
+
+    `scope` indicates the scope of the options.
+    `options` is a list of compile options.
+    `allow_invaild` indicates whether the script should continue to run if `options` is empty.
+    &#34;&#34;&#34;
+    items = _expand(options)
+    assert allow_invaild or len(items) &gt; 0
+    self.meta[&#34;target_compile_options&#34;][scope].extend(items)
+    return self</code></pre>
+</details>
+<div class="desc"><p>Add compile options to the target.</p>
+<p><code>scope</code> indicates the scope of the options.
+<code>options</code> is a list of compile options.
+<code>allow_invaild</code> indicates whether the script should continue to run if <code>options</code> is empty.</p></div>
+</dd>
+<dt id="buildcpp.cmake.target.Target.add_defines"><code class="name flex">
+<span>def <span class="ident">add_defines</span></span>(<span>self,<br>scope: <a title="buildcpp.cmake.const.Scope" href="const.html#buildcpp.cmake.const.Scope">Scope</a>,<br>*,<br>allow_invaild=False,<br>**defines)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_defines(self, scope: Scope, *, allow_invaild=False, **defines):
+    &#34;&#34;&#34;
+    Add preprocessor definitions to the target.
+
+    `scope` indicates the scope of the definitions.
+    `defines` is a dictionary of preprocessor definitions.
+    `allow_invaild` indicates whether the script should continue to run if `definitions` is empty.
+    &#34;&#34;&#34;
+    assert allow_invaild or len(defines) &gt; 0, &#34;Invalid call to add_defines&#34;
+    def check(d, i): return isinstance(d[i], str) or d[i] is None
+    assert all(check(defines, i) for i in defines), &#34;Invalid argument&#34;
+    def tostr(k, v): return f&#34;{k}={v}&#34; if v is not None else k
+    items = [tostr(k, v) for k, v in defines.items()]
+    self.meta[&#34;target_compile_definitions&#34;][scope].extend(items)
+    return self</code></pre>
+</details>
+<div class="desc"><p>Add preprocessor definitions to the target.</p>
+<p><code>scope</code> indicates the scope of the definitions.
+<code>defines</code> is a dictionary of preprocessor definitions.
+<code>allow_invaild</code> indicates whether the script should continue to run if <code>definitions</code> is empty.</p></div>
+</dd>
+<dt id="buildcpp.cmake.target.Target.add_includes"><code class="name flex">
+<span>def <span class="ident">add_includes</span></span>(<span>self,<br>scope: <a title="buildcpp.cmake.const.Scope" href="const.html#buildcpp.cmake.const.Scope">Scope</a>,<br>*directories,<br>allow_invaild=False)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_includes(self, scope: Scope, *directories, allow_invaild=False):
+    &#34;&#34;&#34;
+    Add include directories to the target.
+
+    `scope` indicates the scope of the include directories.
+    `directories` is a list of include directories.
+    `allow_invaild` indicates whether the script should continue to run if `directories` is empty.
+    &#34;&#34;&#34;
+    items = _expand(directories)
+    assert allow_invaild or len(items) &gt; 0, &#34;Invalid call to add_includes&#34;
+    assert all(isinstance(i, Path) for i in items), &#34;Invalid argument&#34;
+    self.meta[&#34;target_include_directories&#34;][scope].extend(items)
+    return self</code></pre>
+</details>
+<div class="desc"><p>Add include directories to the target.</p>
+<p><code>scope</code> indicates the scope of the include directories.
+<code>directories</code> is a list of include directories.
+<code>allow_invaild</code> indicates whether the script should continue to run if <code>directories</code> is empty.</p></div>
+</dd>
+<dt id="buildcpp.cmake.target.Target.add_link_directories"><code class="name flex">
+<span>def <span class="ident">add_link_directories</span></span>(<span>self,<br>scope: <a title="buildcpp.cmake.const.Scope" href="const.html#buildcpp.cmake.const.Scope">Scope</a>,<br>*directories,<br>allow_invaild=False)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_link_directories(self, scope: Scope, *directories, allow_invaild=False):
+    &#34;&#34;&#34;
+    Add link directories to the target.
+
+    `scope` indicates the scope of the link directories.
+    `directories` is a list of link directories.
+    `allow_invaild` indicates whether the script should continue to run if `directories` is empty.
+    &#34;&#34;&#34;
+    items = _expand(directories)
+    assert allow_invaild or len(
+        items) &gt; 0, &#34;Invalid call to add_link_directories&#34;
+    assert all(isinstance(i, Path) for i in items), &#34;Invalid argument&#34;
+    self.meta[&#34;target_link_directories&#34;][scope].extend(items)
+    return self</code></pre>
+</details>
+<div class="desc"><p>Add link directories to the target.</p>
+<p><code>scope</code> indicates the scope of the link directories.
+<code>directories</code> is a list of link directories.
+<code>allow_invaild</code> indicates whether the script should continue to run if <code>directories</code> is empty.</p></div>
+</dd>
+<dt id="buildcpp.cmake.target.Target.add_link_libraries"><code class="name flex">
+<span>def <span class="ident">add_link_libraries</span></span>(<span>self, *libraries, allow_invaild=False)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_link_libraries(self, *libraries, allow_invaild=False):
+    &#34;&#34;&#34;
+    Add link libraries to the target.
+
+    `libraries` is a list of link libraries.
+    `allow_invaild` indicates whether the script should continue to run if `libraries` is empty.
+    &#34;&#34;&#34;
+    items = _expand(libraries)
+    assert allow_invaild or len(items) &gt; 0
+    self.link_libraries.extend(items)
+    return self</code></pre>
+</details>
+<div class="desc"><p>Add link libraries to the target.</p>
+<p><code>libraries</code> is a list of link libraries.
+<code>allow_invaild</code> indicates whether the script should continue to run if <code>libraries</code> is empty.</p></div>
+</dd>
+<dt id="buildcpp.cmake.target.Target.add_link_options"><code class="name flex">
+<span>def <span class="ident">add_link_options</span></span>(<span>self,<br>scope: <a title="buildcpp.cmake.const.Scope" href="const.html#buildcpp.cmake.const.Scope">Scope</a>,<br>*options,<br>allow_invaild=False)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_link_options(self, scope: Scope, *options, allow_invaild=False):
+    &#34;&#34;&#34;
+    Add link options to the target.
+
+    `scope` indicates the scope of the options.
+    `options` is a list of link options.
+    `allow_invaild` indicates whether the script should continue to run if `options` is empty.
+    &#34;&#34;&#34;
+    items = _expand(options)
+    assert allow_invaild or len(items) &gt; 0
+    self.meta[&#34;target_link_options&#34;][scope].extend(items)
+    return self</code></pre>
+</details>
+<div class="desc"><p>Add link options to the target.</p>
+<p><code>scope</code> indicates the scope of the options.
+<code>options</code> is a list of link options.
+<code>allow_invaild</code> indicates whether the script should continue to run if <code>options</code> is empty.</p></div>
+</dd>
+<dt id="buildcpp.cmake.target.Target.add_precompile_headers"><code class="name flex">
+<span>def <span class="ident">add_precompile_headers</span></span>(<span>self,<br>scope: <a title="buildcpp.cmake.const.Scope" href="const.html#buildcpp.cmake.const.Scope">Scope</a>,<br>*headers,<br>allow_invaild=False)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_precompile_headers(self, scope: Scope, *headers, allow_invaild=False):
+    &#34;&#34;&#34;
+    Add precompile headers to the target.
+
+    `scope` indicates the scope of the headers.
+    `headers` is a list of precompile headers.
+    `allow_invaild` indicates whether the script should continue to run if `headers` is empty.
+    &#34;&#34;&#34;
+    items = _expand(headers)
+    assert allow_invaild or len(items) &gt; 0
+    self.meta[&#34;target_precompile_headers&#34;][scope].extend(items)
+    return self</code></pre>
+</details>
+<div class="desc"><p>Add precompile headers to the target.</p>
+<p><code>scope</code> indicates the scope of the headers.
+<code>headers</code> is a list of precompile headers.
+<code>allow_invaild</code> indicates whether the script should continue to run if <code>headers</code> is empty.</p></div>
+</dd>
+<dt id="buildcpp.cmake.target.Target.add_sources"><code class="name flex">
+<span>def <span class="ident">add_sources</span></span>(<span>self,<br>scope: <a title="buildcpp.cmake.const.Scope" href="const.html#buildcpp.cmake.const.Scope">Scope</a>,<br>*sources,<br>allow_invaild=False)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_sources(self, scope: Scope, *sources, allow_invaild=False):
+    &#34;&#34;&#34;
+    Add source files to the target.
+
+    `scope` indicates the scope of the source files.
+    `sources` is a list of source files.
+    `allow_invaild` indicates whether the script should continue to run if `sources` is empty.
+    &#34;&#34;&#34;
+    items = _expand(sources)
+    assert allow_invaild or len(items) &gt; 0, &#34;Invalid call to add_sources&#34;
+    assert all(isinstance(i, Path) for i in items), &#34;Invalid argument&#34;
+    self.meta[&#34;target_sources&#34;][scope].extend(items)
+    return self</code></pre>
+</details>
+<div class="desc"><p>Add source files to the target.</p>
+<p><code>scope</code> indicates the scope of the source files.
+<code>sources</code> is a list of source files.
+<code>allow_invaild</code> indicates whether the script should continue to run if <code>sources</code> is empty.</p></div>
+</dd>
+<dt id="buildcpp.cmake.target.Target.c_standard"><code class="name flex">
+<span>def <span class="ident">c_standard</span></span>(<span>self, standard: int, required: bool = True)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def c_standard(self, standard: int, required: bool = True):
+    &#34;&#34;&#34;
+    Set the C standard of the target.
+
+    `standard` is the C standard to be used.
+    `required` indicates whether the C standard is required.
+    &#34;&#34;&#34;
+    self.set_properties(C_STANDARD=str(standard))
+    self.set_properties(C_STANDARD_REQUIRED=&#34;ON&#34; if required else &#34;OFF&#34;)
+    return self</code></pre>
+</details>
+<div class="desc"><p>Set the C standard of the target.</p>
+<p><code>standard</code> is the C standard to be used.
+<code>required</code> indicates whether the C standard is required.</p></div>
+</dd>
+<dt id="buildcpp.cmake.target.Target.cxx_standard"><code class="name flex">
+<span>def <span class="ident">cxx_standard</span></span>(<span>self, standard: int, required: bool = True)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def cxx_standard(self, standard: int, required: bool = True):
+    &#34;&#34;&#34;
+    Set the C++ standard of the target.
+
+    `standard` is the C++ standard to be used.
+    `required` indicates whether the C++ standard is required.
+    &#34;&#34;&#34;
+    self.set_properties(CXX_STANDARD=str(standard))
+    self.set_properties(CXX_STANDARD_REQUIRED=&#34;ON&#34; if required else &#34;OFF&#34;)
+    return self</code></pre>
+</details>
+<div class="desc"><p>Set the C++ standard of the target.</p>
+<p><code>standard</code> is the C++ standard to be used.
+<code>required</code> indicates whether the C++ standard is required.</p></div>
+</dd>
+<dt id="buildcpp.cmake.target.Target.set_properties"><code class="name flex">
+<span>def <span class="ident">set_properties</span></span>(<span>self, **kwargs)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_properties(self, **kwargs):
+    &#34;&#34;&#34;
+    Set a property of the target.
+
+    `kwargs` is a dictionary of properties.
+    &#34;&#34;&#34;
+    for key in kwargs:
+        self.properties[key] = kwargs[key]
+    return self</code></pre>
+</details>
+<div class="desc"><p>Set a property of the target.</p>
+<p><code>kwargs</code> is a dictionary of properties.</p></div>
+</dd>
+<dt id="buildcpp.cmake.target.Target.to_cmake"><code class="name flex">
+<span>def <span class="ident">to_cmake</span></span>(<span>self) ‑> str</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_cmake(self) -&gt; str:
+    &#34;&#34;&#34;
+    Rewrite this method to define how to convert the target model to the CMake code.
+    &#34;&#34;&#34;
+    if self.type == Type.EXECUTABLE:
+        result = f&#34;add_executable({self.name})\n&#34;
+    else:
+        result = f&#34;add_library({self.name} {self.type.value})\n&#34;
+
+    for part in self.meta:
+        for scope in self.meta[part]:
+            files = [
+                f&#39;&#34;{self._deal(item)}&#34;&#39; for item in self.meta[part][scope]
+            ]
+            if len(files) == 0:
+                continue
+            result += f&#34;{part}({self.name} {scope.value}\n    {&#39;\n    &#39;.join(files)}\n)\n&#34;
+
+    link_libraries = [
+        *self.link_libraries, *[dep.name for dep in self._depend_on]
+    ]
+    if len(link_libraries) &gt; 0:
+        result += f&#34;target_link_libraries({self.name}\n    {&#39;\n    &#39;.join(link_libraries)}\n)\n&#34;
+
+    if any([prop is not None for prop in self.properties.values()]):
+        result += f&#34;set_target_properties({self.name} PROPERTIES\n&#34;
+        for key in self.properties:
+            if self.properties[key] is not None:
+                result += f&#34;    {key} {self.properties[key]}\n&#34;
+        result += &#34;)\n&#34;
+
+    return result</code></pre>
+</details>
+<div class="desc"><p>Rewrite this method to define how to convert the target model to the CMake code.</p></div>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="buildcpp.cmake.target.AbstractTarget" href="#buildcpp.cmake.target.AbstractTarget">AbstractTarget</a></b></code>:
+<ul class="hlist">
+<li><code><a title="buildcpp.cmake.target.AbstractTarget.depend_on" href="#buildcpp.cmake.target.AbstractTarget.depend_on">depend_on</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="buildcpp.cmake" href="index.html">buildcpp.cmake</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="buildcpp.cmake.target.AbstractTarget" href="#buildcpp.cmake.target.AbstractTarget">AbstractTarget</a></code></h4>
+<ul class="">
+<li><code><a title="buildcpp.cmake.target.AbstractTarget.depend_on" href="#buildcpp.cmake.target.AbstractTarget.depend_on">depend_on</a></code></li>
+<li><code><a title="buildcpp.cmake.target.AbstractTarget.rename" href="#buildcpp.cmake.target.AbstractTarget.rename">rename</a></code></li>
+<li><code><a title="buildcpp.cmake.target.AbstractTarget.to_cmake" href="#buildcpp.cmake.target.AbstractTarget.to_cmake">to_cmake</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="buildcpp.cmake.target.Target" href="#buildcpp.cmake.target.Target">Target</a></code></h4>
+<ul class="">
+<li><code><a title="buildcpp.cmake.target.Target.add_compile_features" href="#buildcpp.cmake.target.Target.add_compile_features">add_compile_features</a></code></li>
+<li><code><a title="buildcpp.cmake.target.Target.add_compile_options" href="#buildcpp.cmake.target.Target.add_compile_options">add_compile_options</a></code></li>
+<li><code><a title="buildcpp.cmake.target.Target.add_defines" href="#buildcpp.cmake.target.Target.add_defines">add_defines</a></code></li>
+<li><code><a title="buildcpp.cmake.target.Target.add_includes" href="#buildcpp.cmake.target.Target.add_includes">add_includes</a></code></li>
+<li><code><a title="buildcpp.cmake.target.Target.add_link_directories" href="#buildcpp.cmake.target.Target.add_link_directories">add_link_directories</a></code></li>
+<li><code><a title="buildcpp.cmake.target.Target.add_link_libraries" href="#buildcpp.cmake.target.Target.add_link_libraries">add_link_libraries</a></code></li>
+<li><code><a title="buildcpp.cmake.target.Target.add_link_options" href="#buildcpp.cmake.target.Target.add_link_options">add_link_options</a></code></li>
+<li><code><a title="buildcpp.cmake.target.Target.add_precompile_headers" href="#buildcpp.cmake.target.Target.add_precompile_headers">add_precompile_headers</a></code></li>
+<li><code><a title="buildcpp.cmake.target.Target.add_sources" href="#buildcpp.cmake.target.Target.add_sources">add_sources</a></code></li>
+<li><code><a title="buildcpp.cmake.target.Target.c_standard" href="#buildcpp.cmake.target.Target.c_standard">c_standard</a></code></li>
+<li><code><a title="buildcpp.cmake.target.Target.cxx_standard" href="#buildcpp.cmake.target.Target.cxx_standard">cxx_standard</a></code></li>
+<li><code><a title="buildcpp.cmake.target.Target.set_properties" href="#buildcpp.cmake.target.Target.set_properties">set_properties</a></code></li>
+<li><code><a title="buildcpp.cmake.target.Target.to_cmake" href="#buildcpp.cmake.target.Target.to_cmake">to_cmake</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>
