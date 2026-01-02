@@ -1,66 +1,48 @@
-# buildcpp
+# Buildcpp: A Python Build System for C++ Projects  
 
-![MIT-LICENSE](https://img.shields.io/github/license/Anglebase/buildcpp)
+![MIT-LICENSE](https://img.shields.io/github/license/Anglebase/buildcpp)  
 ![PyPI](https://img.shields.io/pypi/v/buildcpp)
 
-Buildcpp is an innovative build system that combines Python's expressive power with the reliability of CMake. You no longer need to deal with complex CMake syntax—simply manage your C++ projects using clear and maintainable Python code.
+Buildcpp is a build tool that uses Python as the scripting language for C++ projects. Its minimalist design makes building C++ projects straightforward and efficient.
 
-## Why buildcpp?
+## Installation  
 
-Setting up a C++ build process has traditionally been a tedious task. From Makefile to CMake and Xmake, developers have long sought ways to simplify building C++ projects. However, the inherent complexity of C++ builds remains. Buildcpp addresses this by using Python’s approachable syntax to write build scripts, while providing essential utilities for C++ project building.
-
-## How It Works
-
-Buildcpp serves the same role as CMake within the build system. Just as CMake scripts generate corresponding Makefiles when you run `cmake`, Buildcpp is designed to let you write Python scripts that, when executed, generate CMake scripts for the build process. This approach avoids reinventing the wheel and ensures Buildcpp is inherently cross-platform, leveraging the cross-platform nature of both Python and CMake.
-
-## Getting Started
-
-Buildcpp is essentially a Python package. First, ensure you have a [Python 3.7+](https://www.python.org/) environment installed on your system.
-
-Run the following command in your terminal:
+Buildcpp requires **Python 3.7 or higher**. You can download Python from [python.org](https://www.python.org/downloads/).  
+Once Python is installed, install Buildcpp via pip:
 
 ```shell
 pip install buildcpp
 ```
 
-Once installed, you’re ready to use Buildcpp.
+Buildcpp also depends on **CMake 3.15 or later**, which you can download from [cmake.org](https://cmake.org/download/).  
+Under the hood, Buildcpp uses Python for front-end scripting and CMake as the back-end build engine.
 
-For example, create a new directory for your C++ project and add a new Python file inside it. The folder and Python file names are not restricted—you can choose any name you prefer. Note that the Python file name will be used as the project name.
+## Usage  
 
-```text
-myproject
-└── myproject.py
-```
+Buildcpp is a Python package that provides a set of APIs for defining and building C++ projects.  
+To use it, simply create a Python script in your project directory and define your build using Buildcpp’s API. Running this script will execute the build.
 
-Now you can add C++ source files as you normally would. Buildcpp does not impose any specific structure here. For instance, you might create a `src` folder to store `.cpp` files. Write a simple Hello World program in a C++ file. Your directory structure might look like this:
+While Buildcpp uses a script-based approach, the script itself resembles a configuration file. This design choice stems from the fact that C++ builds often involve numerous configuration options, which can become cumbersome in static configuration files.
 
-```text
-myproject
-├── myproject.py
-└── src
-    └── main.cpp
-```
+Here’s a minimal example:
 
-Next, write the Buildcpp build script:
+```python title="myproject.py"
+from buildcpp import Target, Builder, Scope
+from pathlib import Path
 
-```python
-from buildcpp import *
+# Get current directory
+ROOT = Path(__file__).parent
 
-target = Target('demo')\
-    .add_source(Scope.PUBLIC, find_files(SRC_ROOT, '*.cpp'))
+# Define a build target
+target = Target('main')\
+    .add_sources(Scope.PRIVATE, ROOT / 'main.cpp')
 
 if __name__ == '__main__':
+    # Create a builder and compile the target
     builder = Builder()
     builder.attach(target)
     builder.build()
 ```
 
-Here, we first create a `Target` object named `demo`. We then add source files to the target using the `add_source` method. The `Scope.PUBLIC` parameter indicates that these files are publicly accessible to other targets. The `find_files` function locates all `.cpp` files in the `src` directory.
-
-We then create a `Builder` object, attach the target to it, and call the `build` method to generate the Makefile and compile the project.
-
-For more detailed information, check out the code documentation.
-
-## LICENSE
-
-MIT License
+Even without prior Python experience, you can likely understand what’s happening if you’re familiar with C++.  
+The `Target` object is central to Buildcpp—it holds all the metadata needed for the build, much like a configuration file.
