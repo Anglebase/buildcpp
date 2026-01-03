@@ -20,6 +20,7 @@ def import_project(buildcpp: Path) -> dict:
     project_name = buildcpp.name.split('.')[0]
 
     # Import the build script as a module.
+    print(f"Importing project '{buildcpp}'...")
     import sys
     sys.path.insert(0, project_dir.as_posix())
     try:
